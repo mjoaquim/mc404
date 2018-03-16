@@ -5,24 +5,26 @@
 @ Para testar, você pode inicializar as variáveis com valores conhecidos. Note no entanto que no Susy os valores das variáveis serão diferentes a cada teste (o sistema vai alterar o valor das variáveis antes da execução de sua solução).
 
 
+.org 0x100
+
+
+@ Reserva memoria para variaveis.
+varA:   .word   0x10                    @  Reserva memoria e inicializa cada uma
+varB:   .word   0x20
+varC:   .word   0x30
 
 @ Definir constantes
-constante .equ 0x1000
-
-@ Reserva memoria.
-varA:   .skip   0x100
-varB:   .skip   0x104
-varC:   .skip   0x108
+constante .equ 0x1000                   @salva valor da constante
 
 
-.org 0x200
+.org 0x200                              @muda para na posicao 200
 
-start:                     @ um rótulo padrão, vamos usar no Susy
-      set r0, varA         @ Seta r0 com varA
-      set r1, varB         @ Seta r1 com varB
-      set r2, varC         @ Seta r2 com varC
-      set r3, constante    @ seta r3 com a constante
-      add r0,r1            @ adiciona r1 e r0 e armazena em r0
-      add r0,r2            @ adiciona r0 e r2 e armazena em r0
-      add r0,r3            @ adiciona r0 e r3 e armazena em r0
-      hlt                  @ termina a execução
+start:
+      set r3,constante                  @ seta r3 ao valor da constante
+      ld r2,varC                        @ LOAD (LD) endereco de memoria r2 -> varc
+      add r2,r3                         @ soma r2 e r3 e salva em r2
+      ld r1,varB                        @ LOAD (LD) endereco de memoria r1 -> varB
+      add r1,r2                         @ soma r1 e r2 e salva em r2
+      ld r0,varA                        @  LOAD (LD) endereco de memoria r0 -> varA
+      add r0,r1                         @ soma r0 e r1
+      hlt                               @ termina a execuçãota
