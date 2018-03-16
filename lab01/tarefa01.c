@@ -5,7 +5,7 @@
 #define MINVAL -100
 
 int main(void) {
-  int sequencia[COMPR]={-100,-100,3,10,0,70,-10,-88}; // a sequência dada
+  int sequencia[COMPR]={-200,-101,3,10,0,70,-10,-888}; // a sequência dada
   int i;          // variável auxiliar
   int compr;      // comprimento da sequência dada
   int resultado;  // onde o resultado vai ser armazenado
