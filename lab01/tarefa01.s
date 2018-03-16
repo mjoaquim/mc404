@@ -1,9 +1,5 @@
 @ Mateus Joaquim RA: 184083
-@ Lab 0 Orientacoes:
-@ Reserve espaço para três variáveis inteiras na memória, presentes respectivamente nos endereços de rótulo varA, varB e varC. Os endereços de varA, varB e varC devem ser respectivamente 0x100, 0x104 e 0x108. (Utilize a diretivas .skip ou .word para reservar espaço para as variáveis)
-@ Coloque no registrador r0 o valor da soma das três variáveis MAIS o valor constante 0x1000.
-@ Para testar, você pode inicializar as variáveis com valores conhecidos. Note no entanto que no Susy os valores das variáveis serão diferentes a cada teste (o sistema vai alterar o valor das variáveis antes da execução de sua solução).
-
+@ Lab 01
 
 
 @ Definir constantes
