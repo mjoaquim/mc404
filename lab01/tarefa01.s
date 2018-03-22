@@ -3,41 +3,40 @@
 
 
 .org 0x50
-i:            .word     0                   @ Contador
-limsuperior   .equ      0x64                @ Constante com os limites para poder comparar
-liminferior   .equ      -0x64
+limite          .equ      100               @ Constante com o limite
+limiteinferior  .equ     -100               @ limite inferior para comparacao
 
+.org 0x64
+sequencia:      .skip     400               @ Rotulo p/ o susy submeter a sequencia
 
-.org 0x100
-sequencia:                                  @ Rotulo p/ o susy submeter a sequencia
-
-
-.org 0x10a0
+.org 0x290
 @ Reserva memoria para variaveis.
 compr:        .skip     4                   @ Numero de elementos da sequencia
 resultado:    .skip     4                   @ Salvar o resultado
 
 
-
+.org 0x298
 inicio:
-        ld r0, compr
-        @mov r1,r2 @ guarda apontador para in´ıcio do vetor
-        @ld r0,[r1] @ e valor m´aximo corrente (o primeiro valor)
-proximo:
-        add r2,4 @ avan¸ca ponteiro para pr´oximo elemento
-        sub r3,1 @ um elemento a mais verificado
-        jz final @ terminou de verificar todo o vetor?
-        ld r4,[r2] @ n~ao, ent~ao toma mais um valor
-        cmp r0,r4 @ compara com m´aximo corrente
-        jnc proximo @ desvia se menor ou igual
-        mov r1,r2 @ achamos um maior, guarda novo apontador
-        mov r0,r4 @ e novo m´aximo
-        jmp proximo @ e continua a percorrer o vetor
-final:
-        sub compr, 1            @ final do trecho
-        @jl desvia se menor (com sinal)
-        @jg desvia se maior (com sinal)
-        @jnz
+        set r0,0                            @ Resultado = 0
+        ld r1, compr                        @ R1 = COMPRIMENTO
+        set r2, 0x64                        @ Registrador que vai apontar
+        ld r3, sequencia                    @ Pega primeiro valor da sequencia
 
 
-          hlt                               @ termina a execução
+corpo_for:
+        cmp r3,limite                       @ Compara
+        jg pula                             @ Maior que 100, pula
+        cmp r3,limiteinferior               @ Compara
+        jl pula                             @ Menor que -100, pula
+        add r0,1                            @ Esta no intervalo, então adiciona 1 no resultado
+
+pula:
+        add r2,4                            @ Incrementa o valor do endereco
+        ld r3,[r2]                          @ Ponteiro
+        sub r1,1                            @ Diminui o tamanho da lista
+        jz final_for                        @ Se for igual a 0 acaba o laco
+        jmp corpo_for                       @ Reinicia o laco
+
+final_for:
+        st resultado, r0                    @ Seta para conferir com o susy
+        hlt                                 @ termina a execução
