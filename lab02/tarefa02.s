@@ -5,30 +5,55 @@
 .org 0x100
 @ Reserva memoria para variaveis.
 divisor:          .skip     4                    @ Caractere procurado
-num_elementos:    .word      0                   @ contador de posicao
+num_elem:    .word      0                   @ contador de posicao
 soma:             .word      0
 .org 0x200
-vetor:            .skip     400                      @ Rotulo p/ o susy submeter a sequencia
+vetor:            .skip     100                      @ Rotulo p/ o susy submeter a sequencia
 
-.org 0x700
+.org 0x400
 
 inicio:
-      set r1, 0x200	                          @Colocando o endereço apontado do primeiro registrador no r1
-      ld  r2, vetor                         	@Colocando o endereço apontado do segundo registrador no r2, para ir incrementando
-      ld  r3,vetor
-      ld  r4, divisor                         @ seta cada variavel em cada registrador
-      ld  r5, num_elementos
+      set r1, vetor	                          @seta o endereco
+      ld  r4, divisor                         @seta os registradores a cada end
+      ld  r5, num_elem
       ld  r0, soma
 
 prox_dig:
-      cmp r5, 0	                             @Compara com 0 para verificar se é o último termo
-      jz  final_for                     @ Precisamos fazer uma correcao de contagem a mais, estamos contando a partir do 1, e não da posicao zero de vetor
-      shr r2,4*4
-      shl r3,4*4
+      cmp r5, 0	                              @Compara com 0 para verificar se é o último termo
+      jle  final_for                          @Se for zero acaba
+      ld  r2,[r1]                             @usa os dois registradores para dar os shifts
+      ld  r3,[r1]
+      shl r3,4*4                              @mais significativo
       shr r3,4*4
-      sub r5,1                               @incrementa contador
+      sub r5,1                                @contou 16bits, subtrai
+      cmp r5,0
+      jle  salva                            @se for zero (ou menor) vai para a divisao
+      shr r2,4*4                              @menos significativo
+      sub r5,1                                @contou mais 16bits, subtrai
+divisao:
+      sar r2,1                                @divide por dois os registradores que contem os 16bits e o divisor
+      sar r3,1
+      sar r4,1
+      cmp r4,1                                @so para quando o divisor for 1
+      jle soma_total
+      jmp divisao
+
+salva:
+      set r2,0
+      jmp divisao
+
+soma_total:
+      add r0,r2                              @soma a divisao ao r0
+      add r0,r3
+      set r2,0
+      set r3,0
+      add r1,4
+      cmp r5,0
+      jle final_for
       jmp prox_dig
 
+subtrai:
+      jmp divisao
 
 final_for:
 
