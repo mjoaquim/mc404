@@ -1,7 +1,7 @@
 @ *************
 @ ContaSegundos
 @ *************
-@ programa para contar continuamente os segundos de 0 a 9, 
+@ programa para contar continuamente os segundos de 0 a 9,
 @ usando interrupções do temporizador e um mostrador de 7 segmentos
 
 @ constantes
@@ -15,7 +15,7 @@ _start:
      set   r1,int_tempo    @ endereço do tratador
      st    [r0],r1         @ instala tratador no vetor
      set   sp,0x10000      @ prepara pilha
-     set   r0,0            @ 
+     set   r0,0            @
      stb   dig_corrente,r0 @ zera valor dig_corrente
      call  atualiza_mostr  @ atualiza mostrador
      sti                   @ habilita interrupções
@@ -34,7 +34,7 @@ trata_tick1:
      jmp   espera          @ e volta a esperar interrupção
 
 @ procedimento para atualizar o mostrador com o valor de r0
-atualiza_mostr:            
+atualiza_mostr:
      set   r2,tab_digitos  @ indexa valor de r0 no vetor
      add   r2,r0           @ de dígitos para determinar a configuração
      ldb   r2,[r2]         @ de bits a ser escrita no mostrador
