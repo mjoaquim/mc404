@@ -1,0 +1,10 @@
+%leds Rua1
+ryg 0x90
+%leds Rua2
+ryg 0x91
+%timer
+0x50 0x10
+%7segs Dezena
+0x41
+%7segs Unidade
+0x40
