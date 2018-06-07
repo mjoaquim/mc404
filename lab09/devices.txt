@@ -1,0 +1,13 @@
+%buttons Onibus
+Parada 0xd0000 7 P
+
+
+%buttons Centro
+Chegada 0xa0000 0 P
+Partida 0xa0001 0 P
+%buttons Barao
+Chegada 0xa0002 0 P
+Partida 0xa0003 0 P
+%buttons Unicamp
+Chegada 0xa0004 0 P
+Partida 0xa0005 0 P
