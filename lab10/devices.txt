@@ -1,0 +1,19 @@
+%buttons Onibus
+Parada 0xd0000 7 P
+
+
+%buttons Centro
+Chegada 0xa0000 0 P
+Partida 0xa0001 0 P
+%buttons Barao
+Chegada 0xa0002 0 P
+Partida 0xa0003 0 P
+%buttons Unicamp
+Chegada 0xa0004 0 P
+Partida 0xa0005 0 P
+
+%lcd LCD
+# portcmd portdata color size
+# size can be 16x2, 20x2 or 20x4
+# color can be blue, green or amber
+0x90000 0x90001 green 20x2
